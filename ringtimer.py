@@ -6,15 +6,17 @@ class RingBuffer(object):
     def __init__(self, timeout):
         self.timeout = timeout
         self.slot_tasks = {}
-        for i in range(1, timeout+1):
-            self.slot_tasks[i] = {}
         '''
         slot0: {id: value}
         slot1: {id: value}
         '''
-
+        self.init_slot_tasks()
         self.task_slot_index = {}
         self.cursor = 1
+
+    def init_slot_tasks(self):
+        for i in range(1, self.timeout + 1):
+            self.slot_tasks[i] = {}
 
     def set_task_slot(self, d, slot):
         if self.task_slot_index.get(d, None):
